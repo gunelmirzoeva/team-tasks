@@ -1,8 +1,3 @@
-
----
-#### 7. **Add a simple `Makefile`**
-It doesn’t have to do anything yet — placeholders are fine:
-```makefile
 run:
 	go run ./cmd/server
 
@@ -14,3 +9,9 @@ docker-up:
 
 migrate:
 	echo "Run migrations"
+
+migrate-up:
+	migrate -path ./migrations -database "$(DATABASE_URL)" up
+
+migrate-down:
+	migrate -path ./migrations -database "$(DATABASE_URL)" down

@@ -2,8 +2,10 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/gunelmirzoeva/team-tasks/internal/config"
+	"github.com/gunelmirzoeva/team-tasks/internal/db"
 	"github.com/gunelmirzoeva/team-tasks/internal/logger"
 )
 
@@ -18,5 +20,11 @@ func main() {
 	logger.Info("Configuration loaded", "port", cfg.Port, "env", cfg.AppEnv)
 	logger.Info("Server starting on port " + cfg.Port + "...")
 
-	//TODO: start your server here
+	database, err := db.Connect(cfg.DatabaseURL) 
+	if err != nil {
+		logger.Error("failed to connect to database", "error", err)
+		os.Exit(1)
+	}
+	defer database.Close()
+	logger.Info("Database connection established")
 }
